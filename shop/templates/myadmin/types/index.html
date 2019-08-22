@@ -1,0 +1,35 @@
+{% extends 'myadmin/base.html' %}
+{% block mainbody %}
+<div class="span9">
+	<h2>
+	浏览商品类别信息
+	</h2>
+	<hr/>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>id号</th>
+				<th>类别名称</th>
+				<th>父类别id</th>
+				<th>path</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for vo in dicttype %}
+			<tr>	
+				<td>{{ vo.id }}</td>
+				<td>{{vo.pname}} |-- {{ vo.name }}</td>
+				<td>{{ vo.pid }}</td>
+				<td>{{ vo.path }}</td>
+				<td>
+					<a href="{% url 'myadmin_types_add' vo.id %}">添加子类别</a>
+					<a href="{% url 'myadmin_types_edit' vo.id %}">修改</a>
+					<a href="{% url 'myadmin_types_delete' vo.id %}">删除</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>				
+
+{% endblock %}

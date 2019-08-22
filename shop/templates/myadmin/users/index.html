@@ -1,0 +1,71 @@
+{% extends 'myadmin/base.html' %}
+{% block mainbody %}
+<div class="span9">
+		<h2>浏览会员用户信息</h2>
+		<hr/>
+		<form id="edit-profile" class="form-horizontal" action="{% url 'myadmin_users_index' 1 %}" method='get'>
+		{% csrf_token %}
+		输入关键字:<input type="text" name="name"   placeholder="账号/姓名" style="width:100px;"> 
+		性别:<select name='sex'  style="width:90px;">
+			<option value="0">不限</option>
+			<option value="1">男</option>
+			<option value='2'>女</option>
+			</select>
+
+		<button type="submit" class="btn btn-primary">搜索</button>
+		<button class="btn"><a href="{% url 'myadmin_users_index' 1 %}">全部</button></a>
+		<p>
+
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>id号</th>
+					<th>账号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>email</th>
+					<th>注册时间</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for vo in dictusers %}
+				<tr>
+					<td>{{ vo.id }}</td>
+					<td>{{ vo.username }}</td>
+					<td>{{ vo.name }}</td>
+					<td>{% if vo.sex == 1 %}男{% else %}女{% endif %}</td>
+					<td>{{ vo.email }}</td>
+					<td>{{ vo.addtime}}</td>
+					<td>{% if vo.state == 0  %}<span style="color:#03a330">管理员</span>{% elif vo.state == 1 %}<span style="color:#000000">普通账户</span>{% else %}<span style="color:#ec1c24">禁用账户</span>{% endif %}</td>
+					<td>
+						<a href="{% url 'myadmin_users_reset'  vo.id %}">重置会员密码</a>
+						<a href="{% url 'myadmin_users_edit'   vo.id %}">修改</a>
+						<a href="{% url 'myadmin_users_delete' vo.id %}">删除</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>	
+		
+		<div class="pagination">
+			<ul>
+				<li class="disabled">
+
+                    <a href="{% url 'myadmin_users_index' plist_min %}?{{ wherelist|join:'&' }}">&laquo;</a>
+           		</li>
+
+				{% for i in plist %}
+				<li class="active">
+					<a href="{% url 'myadmin_users_index' i %}?{{ wherelist|join:'&' }}">{{i}}</a>
+				</li>
+				{% endfor %}
+
+				<li class="disabled">
+					<a href="{% url 'myadmin_users_index' plist_max %}?{{ wherelist|join:'&' }}">&raquo;</a>
+				</li>
+
+			</ul>
+		</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "myadmin/base.html" %}
+{% block mainbody %}
+<div class="span9">
+<h2>修改会员信息</h2>
+	<hr/>
+	<form id="edit-profile" class="form-horizontal" action="{% url 'myadmin_users_update' dictuser.id %}" method="post">
+		<fieldset>
+			{% csrf_token %}
+			<div class="control-group">
+				<label class="control-label" for="input01">会员名</label>
+				<div class="controls">
+				{{dictuser.username}}
+			</div>
+
+			<p>
+			<br/>
+			<div class="control-group">
+				<label class="control-label" for="input01">真实姓名</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="name" placeholder="{{dictuser.name}}"/>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="input01">密码</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="password" placeholder="请输入您的密码" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="input01">再次输入密码</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="password" placeholder="请输核对您的密码"/>
+				</div>
+			</div>
+
+            <div class="control-group">
+                <label class="control-label" for="input01">性别</label>
+                <div class="controls">
+                    <input type="radio" name="sex" class="input-xlarge" id="input01" value="1" /> 男
+                    <input type="radio" name="sex" class="input-xlarge" id="input01" value="0" /> 女
+                </div>
+            </div>
+
+			<div class="control-group">
+				<label class="control-label" for="input01">email邮箱</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="email" placeholder="{{dictuser.email}}" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="name">地址</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="address" placeholder="{{dictuser.address}}"/>
+				</div>
+			</div>	
+
+			<div class="control-group">
+				<label class="control-label" for="input01">电话号码</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="phone" placeholder="{{dictuser.phone}}"/>
+				</div>
+			</div>
+
+
+			<div class="control-group">
+				<label class="control-label" for="input01">邮编</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="code" placeholder="{{dictuser.code}}"/>
+				</div>
+			</div>
+
+			<div class="control-group">
+                <label class="control-label" for="input01">账户类别</label>
+                <div class="controls">
+                    <input type="radio" name="state" class="input-xlarge"  value="0" /> 管理员
+                    <input type="radio" name="state" class="input-xlarge"  value="1" /> 普通用户
+                    <input type="radio" name="state" class="input-xlarge"  value="2" /> 禁用账户
+                </div>
+            </div>							
+
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">修改</button> <button class="btn">重置</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
+
+{% endblock %}

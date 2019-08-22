@@ -1,0 +1,45 @@
+{% extends 'myadmin/base.html' %}
+{% block mainbody %}
+<div class='span9'>
+	<h2>重置密码操作</h2>
+	<hr/>
+	<form id="edit-profile" class="form-horizontal" method="post" action="{% url 'myadmin_users_resetps' dictuser.id %}">
+	<input type='hidden' name='id' value="dictuser.id">
+<fieldset>
+	{% csrf_token %}
+	<div class="control-group">
+		<label class="control-label" for="input01">会员名:</label>
+		<div class="controls">
+			<input type="text" disabled class='input-xlarge' name='username' placeholder="{{dictuser.username}}">
+	</div>
+
+	<p>
+	<br/>
+	<div class="control-group">
+		<label class="control-label" for="input01">真实姓名:</label>
+		<div class="controls">
+			<input type="text" disabled class="input-xlarge" name="name" placeholder="{{dictuser.name}}"/>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="input01">请输入重置的密码:</label>
+		<div class="controls">
+			<input type="text" class="input-xlarge" name="password" placeholder="请输入您的密码" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="input01">再次输入密码:</label>
+		<div class="controls">
+			<input type="text" class="input-xlarge" name="password" placeholder="请输核对您的密码"/>
+		</div>
+	</div>				
+
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary">修改</button> <button class="btn">重置</button>
+	</div>
+</fieldset>
+</form>
+</div>
+{% endblock %}

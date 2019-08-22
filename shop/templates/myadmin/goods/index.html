@@ -1,0 +1,84 @@
+{% extends 'myadmin/base.html' %}
+{% block mainbody %}
+<div class="span9">
+	<h2>浏览商品信息</h2>
+	<hr/>
+	<form id="edit-profile" class="form-horizontal" action="{% url 'myadmin_goods_index' 1 %}" method='get'>
+	{% csrf_token %}
+		输入商品关键字:<input type="text" name="goods" value="{{ request.GET.wherelist  }}"  style="width:100px;"> 
+		商品类别:
+			<select name='typeid'  style="width:160px;">
+			<option value="0">不限</option>
+			{% for go in typelist %}
+			<option value="{{ go.id }}">{{ go.pname }}{{ go.name }}</option>
+			{% endfor %}
+			</select>
+		商品状态:
+			<select name='state'  style="width:80px;">
+			<option value="0">不限</option>
+			<option value="1">新品</option>
+			<option value="2">在售</option>
+			<option value="3">下线</option>
+			</select>
+
+		<button type="submit" class="btn btn-primary">搜索</button>
+		<button class="btn"><a href="{% url 'myadmin_goods_index' 1 %}">全部</a></button>
+		<p>
+
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>id号</th>
+				<th>商品名称</th>
+				<th>商品类别</th>
+				<th>图片</th>
+				<th>价格</th>
+				<th>点击量</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for vo in dictgoods %}
+			<tr>	
+				<td>{{ vo.id }}</td>
+				<td>{{ vo.goods }}</td>
+				<td>{{ vo.typename }}</td>
+				<td><img src="/static/myadmin/photo/s_{{vo.picname}}" ></td>
+				<td>{{ vo.price }}</td>
+				<td>{{ vo.clicknum }}</td>
+				<td>{% if vo.state == 1 %}
+					<span style="color:#ff7f27">新品</span>
+					{% elif vo.state == 2 %}
+					<span style="color:#0ed145">在售</span>
+					{% else %}
+					<span style="color:#ec1c24">下线</span>
+					{% endif %}</td>
+				<td>
+					<a href="{% url 'myadmin_goods_edit' vo.id %}">修改</a>
+					<a href="{% url 'myadmin_goods_delete' vo.id %}">删除</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+
+	<div class="pagination">
+			<ul>
+				<li class="disabled">
+                    <a href="{% url 'myadmin_goods_index' plist_min %}?{{ wherelist|join:'&' }}">&laquo;</a>
+           		</li>
+
+				{% for i in plist %}
+				<li class="active">
+					<a href="{% url 'myadmin_goods_index' i %}?{{ wherelist|join:'&' }}">{{i}}</a>
+				</li>
+				{% endfor %}
+
+				<li class="disabled">
+					<a href="{% url 'myadmin_goods_index' plist_max %}?{{ wherelist|join:'&' }}">&raquo;</a>
+				</li> 
+			</ul>
+	</div>
+
+{% endblock %}
